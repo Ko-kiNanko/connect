@@ -5,11 +5,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   
   has_many :items
-  has_many :rooms
   has_many :room_users
+  has_many :rooms, through: :room_users
   has_many :boards
   has_many :board_users
-  has_many :chat_messages
+  has_many :chats
   has_many :board_messages
 
   with_options presence: true do
@@ -27,6 +27,7 @@ class User < ApplicationRecord
     validates :first_kana
   end
 
-  validates :password, format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+\z/i }
+
+  # validates :password, format: { with: /\A(?=.*?[a-zA-Z])(?=.*?[\d])[a-zA-Z\d]+\z/i }
 
 end

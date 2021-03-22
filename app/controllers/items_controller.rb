@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :find_params, only: [:show, :edit]
+  before_action :find_params, only: [:show, :edit, :destroy]
 
   def index
     @items = Item.all
@@ -23,6 +23,15 @@ class ItemsController < ApplicationController
   end
 
   def edit
+  end
+
+  def destroy
+    if current_user.id == @item.user.id
+     @item.destroy
+     redirect_to root_path
+    else
+      render :show
+    end
   end
 
   private
